@@ -2,7 +2,7 @@
 - [x] Should be able to sign up
 - [x] Should be able to authenticate
 - [x] Should be able to fetch a user's profile
-- [ ] Should be able to display user check in number
+- [x] Should be able to get user check in number
 - [x] Should be able to let user keep track of their check in history
 - [ ] Should be able to find nearby gyms
 - [ ] Should be able to search for gyms by name
