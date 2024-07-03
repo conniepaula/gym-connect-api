@@ -6,14 +6,14 @@
 - [ ] Should be able to let user keep track of their check in history
 - [ ] Should be able to find nearby gyms
 - [ ] Should be able to search for gyms by name
-- [ ] Should be able to let user check in
+- [x] Should be able to let user check in
 - [ ] Should be able to validate user check in
-- [ ] Should be able to sign a new gym up
+- [x] Should be able to sign a new gym up
 
 # Business Rules
 - [x] User should not be able to sign up with pre-registered email
-- [ ] User can't check in twice in the same day
-- [ ] User can't check in if far (100m+) from the gym
+- [x] User can't check in twice in the same day
+- [x] User can't check in if far (250m+) from the gym
 - [ ] Check ins can only be validated up to 20 minutes after creation
 - [ ] Check in can only be validated by admins
 - [ ] Gyms can only be added by admins

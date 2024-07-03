@@ -3,25 +3,26 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { CheckInService } from './check-in'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
-import { Decimal } from '@prisma/client/runtime/library'
+import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins-error'
+import { MaxDistanceError } from './errors/max-distance-error'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let gymsRepository: InMemoryGymsRepository
 let sut: CheckInService
 
 describe('Get User Profile Service', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     gymsRepository = new InMemoryGymsRepository()
     sut = new CheckInService(checkInsRepository, gymsRepository)
 
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: 'gym-01',
       name: 'TS Gym',
       description: '',
       phone: '',
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: 0,
+      longitude: 0,
     })
 
     vi.useFakeTimers()
@@ -60,7 +61,7 @@ describe('Get User Profile Service', () => {
         userLatitude: 0,
         userLongitude: 0,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
   })
 
   it('should allow user to create a gym check in if they have not created one on that date yet', async () => {
@@ -86,13 +87,13 @@ describe('Get User Profile Service', () => {
   })
 
   it('should not allow user to create a gym check in if they are too far away from the gym', async () => {
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: 'gym-02',
       name: 'FitBallet',
       description: '',
       phone: '',
-      latitude: new Decimal(53.4106672),
-      longitude: new Decimal(-1.4673056),
+      latitude: 53.4106672,
+      longitude: -1.4673056,
     })
 
     await expect(() =>
@@ -102,6 +103,6 @@ describe('Get User Profile Service', () => {
         userLatitude: 53.4543123,
         userLongitude: 1.5046098,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxDistanceError)
   })
 })
