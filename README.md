@@ -1,9 +1,9 @@
 # Functional Requirements
 - [x] Should be able to sign up
-- [ ] Should be able to authenticate
-- [ ] Should be able to fetch a logged user's profile
+- [x] Should be able to authenticate
+- [x] Should be able to fetch a user's profile
 - [ ] Should be able to display user check in number
-- [ ] Should be able to let user keep track of their check in hinstory
+- [ ] Should be able to let user keep track of their check in history
 - [ ] Should be able to find nearby gyms
 - [ ] Should be able to search for gyms by name
 - [ ] Should be able to let user check in
