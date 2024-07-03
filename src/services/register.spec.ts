@@ -1,16 +1,20 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { RegisterService } from './register'
 
 import { compare } from 'bcryptjs'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
-describe('Register Service', () => {
-  it('should allow user to register', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(usersRepository)
+let usersRepository: InMemoryUsersRepository
+let sut: RegisterService
 
-    const { user } = await registerService.handle({
+describe('Register Service', () => {
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository()
+    sut = new RegisterService(usersRepository)
+  })
+  it('should allow user to register', async () => {
+    const { user } = await sut.handle({
       name: 'Jane Doe',
       email: 'jane@doe.com',
       password: '123456',
@@ -21,10 +25,7 @@ describe('Register Service', () => {
   })
 
   it('should hash user password upon registration', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(usersRepository)
-
-    const { user } = await registerService.handle({
+    const { user } = await sut.handle({
       name: 'Jane Doe',
       email: 'jane@doe.com',
       password: '123456',
@@ -39,19 +40,17 @@ describe('Register Service', () => {
   })
 
   it('should not allow a user to register with an already registered email address', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(usersRepository)
     const email = 'jane@doe.com'
 
-    await registerService.handle({
+    await sut.handle({
       name: 'Jane Doe',
       email,
       password: '123456',
     })
 
     // Promise should reject as a user with the same email already exists
-    expect(() =>
-      registerService.handle({
+    await expect(() =>
+      sut.handle({
         name: 'Jane Doe',
         email,
         password: '123456',
