@@ -27,4 +27,15 @@ export class InMemoryGymsRepository implements GymsRepository {
     }
     return gym
   }
+
+  async findManyByQuery(query: string, page: number) {
+    const caseInsensitiveQuery = new RegExp(query, 'i')
+    return this.items
+      .filter(
+        (item) =>
+          item.name.match(caseInsensitiveQuery) ||
+          item.description?.match(caseInsensitiveQuery),
+      )
+      .slice((page - 1) * 20, page * 20)
+  }
 }
