@@ -4,8 +4,9 @@
 - [x] Should be able to fetch a user's profile
 - [x] Should be able to get user check in number
 - [x] Should be able to let user keep track of their check in history
-- [ ] Should be able to find nearby gyms
-- [ ] Should be able to search for gyms by name
+- [x] Should be able to find nearby gyms (up to 15 km)
+- [x] Should be able to search for gyms by name
+- [x] Should be able to search for gyms by description
 - [x] Should be able to let user check in
 - [ ] Should be able to validate user check in
 - [x] Should be able to sign a new gym up
