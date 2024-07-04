@@ -5,7 +5,7 @@ import { CheckIn, Prisma } from '@prisma/client'
 import { CheckInsRepository } from '../check-ins-repository'
 
 export class InMemoryCheckInsRepository implements CheckInsRepository {
-  public items: CheckIn[] = []
+  public items: Array<CheckIn> = []
 
   async create(data: Prisma.CheckInUncheckedCreateInput) {
     const checkIn = {
@@ -21,16 +21,26 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     return checkIn
   }
 
+  async save(checkIn: CheckIn) {
+    const checkInIndex = this.items.findIndex((item) => item.id === checkIn.id)
+
+    if (checkInIndex >= 0) {
+      this.items[checkInIndex] = checkIn
+    }
+
+    return checkIn
+  }
+
   async findByUserIdOnDate(userId: string, date: Date) {
     const startOfDay = dayjs(date).startOf('date')
     const endOfDay = dayjs(date).endOf('date')
 
-    const checkInOnSameDate = this.items.find((checkIn) => {
-      const checkInDate = dayjs(checkIn.created_at)
+    const checkInOnSameDate = this.items.find((item) => {
+      const checkInDate = dayjs(item.created_at)
       const isOnSameDate =
         checkInDate.isAfter(startOfDay) && checkInDate.isBefore(endOfDay)
 
-      return checkIn.user_id === userId && isOnSameDate
+      return item.user_id === userId && isOnSameDate
     })
 
     if (!checkInOnSameDate) {
@@ -48,5 +58,15 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
 
   async countByUserId(userId: string) {
     return this.items.filter((item) => item.user_id === userId).length
+  }
+
+  async findById(id: string) {
+    const checkIn = this.items.find((item) => item.id === id)
+
+    if (!checkIn) {
+      return null
+    }
+
+    return checkIn
   }
 }
