@@ -15,7 +15,7 @@
 - [x] User should not be able to sign up with pre-registered email
 - [x] User can't check in twice in the same day
 - [x] User can't check in if far (250m+) from the gym
-- [ ] Check ins can only be validated up to 20 minutes after creation
+- [x] Check ins can only be validated up to 20 minutes after creation
 - [ ] Check in can only be validated by admins
 - [ ] Gyms can only be added by admins
 
