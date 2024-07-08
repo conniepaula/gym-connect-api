@@ -1,12 +1,20 @@
+import { prisma } from '@/lib/prisma'
+import { hash } from 'bcryptjs'
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
 
-export async function createAndAuthenticateUser(app: FastifyInstance) {
+export async function createAndAuthenticateUser(
+  app: FastifyInstance,
+  isAdmin = false,
+) {
   // User creation
-  await request(app.server).post('/users').send({
-    name: 'Jane Doe',
-    email: 'jane@doe.com',
-    password: 'test123',
+  await prisma.user.create({
+    data: {
+      name: 'Jane Doe',
+      email: 'jane@doe.com',
+      password_hash: await hash('test123', 6),
+      role: isAdmin ? 'ADMIN' : 'MEMBER',
+    },
   })
 
   // User authentication

@@ -13,7 +13,7 @@ describe('Get Nearby Gyms Controller (e2e)', () => {
   })
 
   it('should get all gyms located within maximum nearby distance', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, true)
 
     await request(app.server)
       .post('/gyms')

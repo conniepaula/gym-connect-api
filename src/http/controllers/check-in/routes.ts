@@ -5,6 +5,7 @@ import { create } from './create'
 import { history } from './history'
 import { validate } from './validate'
 import { metrics } from './metrics'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 
 export async function checkInRoutes(app: FastifyInstance) {
   // Add hook to all routes since they require authentication
@@ -15,5 +16,9 @@ export async function checkInRoutes(app: FastifyInstance) {
 
   app.post('/gyms/:gymId/check-in', create)
 
-  app.patch('/check-in/:checkInId/validate', validate)
+  app.patch(
+    '/check-in/:checkInId/validate',
+    { onRequest: [verifyUserRole('ADMIN')] },
+    validate,
+  )
 }
