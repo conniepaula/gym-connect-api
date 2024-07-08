@@ -8,7 +8,7 @@
 - [x] Should be able to search for gyms by name
 - [x] Should be able to search for gyms by description
 - [x] Should be able to let user check in
-- [ ] Should be able to validate user check in
+- [x] Should be able to validate user check in
 - [x] Should be able to sign a new gym up
 
 # Business Rules
@@ -16,11 +16,11 @@
 - [x] User can't check in twice in the same day
 - [x] User can't check in if far (250m+) from the gym
 - [x] Check ins can only be validated up to 20 minutes after creation
-- [ ] Check in can only be validated by admins
-- [ ] Gyms can only be added by admins
+- [x] Check in can only be validated by admins
+- [x] Gyms can only be added by admins
 
 # Non functional requirements
 - [x] User passwords need to be encrypted
 - [x] Application data must be stored in a PostgreSQL database
 - [x] All data lists need to be paginated with 20 items per page
-- [ ] User must be identified by JWT (JSON Web Token)
+- [x] User must be identified by JWT (JSON Web Token)
