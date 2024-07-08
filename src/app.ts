@@ -2,8 +2,8 @@ import fastify from 'fastify'
 import fastifyJwt from '@fastify/jwt'
 import { ZodError } from 'zod'
 
-import { userRoutes } from './http/controllers/user/routes'
-import { gymRoutes } from './http/controllers/gym/routes'
+import { userRoutes } from './http/controllers/users/routes'
+import { gymRoutes } from './http/controllers/gyms/routes'
 import { env } from './env'
 import { checkInRoutes } from './http/controllers/check-in/routes'
 

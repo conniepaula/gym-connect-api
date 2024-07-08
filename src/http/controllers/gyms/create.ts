@@ -6,7 +6,7 @@ import { makeCreateGymService } from '@/services/factories/make-create-gym-servi
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createGymBodySchema = z.object({
     name: z.string(),
-    description: z.string().email().nullable(),
+    description: z.string().nullable(),
     phone: z.string().nullable(),
     latitude: z.number().refine((value) => {
       return Math.abs(value) <= 90
