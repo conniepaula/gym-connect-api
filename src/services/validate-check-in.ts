@@ -37,7 +37,10 @@ export class ValidateCheckInService {
     if (timeElapsedSinceCheckInCreation > MAX_VALIDATION_TIME_IN_MINS) {
       throw new MaxElapsedTimeError()
     }
+
     checkIn.validated_at = new Date()
+
+    await this.checkInsRepository.save(checkIn)
 
     return { checkIn }
   }
